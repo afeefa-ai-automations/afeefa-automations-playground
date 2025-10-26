@@ -1,0 +1,583 @@
+{
+  "name": "Multi-Vendor Data Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1424,
+        -304
+      ],
+      "id": "d45ec7e7-dd31-4ba4-81dd-1294e4509240",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.amazon.co.uk/s?k=laptop",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1072,
+        -496
+      ],
+      "id": "853a93dc-3e34-4ff0-a7e4-b4e85b8b3d23",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        -496
+      ],
+      "id": "0f36873d-3e79-4cde-be32-e16a1950ae45",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        -256
+      ],
+      "id": "496f5978-ca31-48ad-a721-eb52badc957a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "fABHtAwxCJ2TtPFi",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "title": "Multi vendors web scrapping",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        160,
+        -576
+      ],
+      "id": "4bbee09f-3060-48dd-af32-01b767221b6c",
+      "name": "Create spreadsheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "F2rqriBTxyq2touI",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1QxFH_2GpJYFT91aycHaZyvm5fFowDuDRU9rHVuZBOIM",
+          "mode": "list",
+          "cachedResultName": "Multi vendors web scrapping",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QxFH_2GpJYFT91aycHaZyvm5fFowDuDRU9rHVuZBOIM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QxFH_2GpJYFT91aycHaZyvm5fFowDuDRU9rHVuZBOIM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.products.title }}",
+            "Price": "={{ $json.products.price }}",
+            "URL": "={{ $json.products.url }}",
+            "Vendor": "={{ $json.products.vendor }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Scraped At",
+              "displayName": "Scraped At",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        160,
+        16
+      ],
+      "id": "7ac58d7c-aee1-49ad-9aeb-42d26d946242",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "F2rqriBTxyq2touI",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "products, ",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -256
+      ],
+      "id": "4d25d75b-b5fe-45a7-95ee-1aceca013743",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/{{ $json.spreadsheetId }}/values/Sheet1!A1:E1?valueInputOption=RAW",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"values\": [\n    [\"Title\", \"Price\", \"URL\", \"Vendor\", \"Scraped At\"]\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        -576
+      ],
+      "id": "0ac1e2c1-dc8b-4c49-95fd-ef392d965b3c",
+      "name": "Sheet header",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "F2rqriBTxyq2touI",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.ebay.com/sch/i.html?_nkw=laptop&_sacat=0&_from=R40&_trksid=m570.l1313",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1104,
+        -64
+      ],
+      "id": "a6f53831-e4cb-4bef-8646-330b2d097bb9",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -64
+      ],
+      "id": "6e1c9e45-34a3-42df-80f9-761804428598",
+      "name": "Markdown1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        48,
+        -256
+      ],
+      "id": "9b5d6701-e7dd-44fc-92cd-63404038bd9d",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2cc552dc-3312-48ed-8a40-e851365ee688",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -384,
+        -384
+      ],
+      "id": "f71ce299-7c1c-4ec0-8b4e-8ef9fa49b47d",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3609c679-5a0f-4447-bee4-083aa95dc5ca",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -368,
+        -64
+      ],
+      "id": "37c44d5b-f5be-46f8-b89f-c36108d73894",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simplified eBay Processor\nconst aiOutput = $json.output || '';\n\ntry {\n  // Extract JSON from markdown code block\n  const jsonMatch = aiOutput.match(/```json\\n([\\s\\S]*?)\\n```/);\n  const jsonString = jsonMatch ? jsonMatch[1] : aiOutput;\n  \n  const data = JSON.parse(jsonString);\n  const products = (data.products || [])\n    .filter(p => p.title && p.price && p.url)\n    .map(p => ({\n      title: p.title,\n      price: typeof p.price === 'number' ? p.price : parseFloat(p.price),\n      url: p.url,\n      vendor: p.vendor || 'ebay.com',\n      source: 'ebay'\n    }));\n  \n  return [{ json: { products: products } }];\n  \n} catch (error) {\n  console.error('eBay processing failed:', error);\n  return [{ json: { products: [], error: error.message } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -64
+      ],
+      "id": "aafb1f11-0dff-40ec-afa2-294859d1ea97",
+      "name": "ebay scrapper"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Access the actual output value from the AI node\nconst aiOutput = $json.output || '';\n\n// Debug what we're receiving\nconsole.log('AI Output type:', typeof aiOutput);\nconsole.log('AI Output sample:', aiOutput.substring(0, 200));\n\n// If it's already parsed JSON, use it directly\nif (typeof aiOutput === 'object') {\n  return [{ json: { products: aiOutput.products || [] } }];\n}\n\n// If it's a string, try to extract JSON\ntry {\n  // Find JSON in the string (between curly braces)\n  const jsonMatch = aiOutput.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    const data = JSON.parse(jsonMatch[0]);\n    return [{ json: { products: data.products || [] } }];\n  }\n} catch (error) {\n  // If all fails, return the raw data for inspection\n  return [{ json: { \n    raw_data: aiOutput,\n    message: 'Could not parse JSON directly'\n  } }];\n}\n\nreturn [{ json: { message: 'No data found' } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -160,
+        -384
+      ],
+      "id": "0db166ff-81cf-4393-9886-9443ac743f3c",
+      "name": "amazon scrapper"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Extract all product information from this HTML content and return as structured JSON:\n\nHTML CONTENT:\n{{ $json.data }}\nInstructions:\n1. Extract product titles, prices, and URLs\n2. Clean the data (remove extra spaces, symbols from prices)\n3. Format prices as numbers only\n4. Ensure URLs are complete and valid\n5. Return only the JSON object, no other text",
+        "options": {
+          "systemMessage": "You are a professional web scraping data extraction agent. Your task is to analyze raw HTML content and extract structured product information including product names, prices, and URLs. Return only clean, formatted JSON data without any explanations or additional text.\n\nOutput Format:\n{\n  \"products\": [\n    {\n      \"title\": \"cleaned product name\",\n      \"price\": \"numeric price\",\n      \"url\": \"full product URL\",\n      \"vendor\": \"website name\"\n    }\n  ]\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -688,
+        -496
+      ],
+      "id": "83a70629-fd59-4541-8ba9-bb2a84e8e904",
+      "name": "Amazon Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Search eBay for current laptop listings and extract the product information. \n\nReturn the results as a VALID JSON object with this exact structure:\n{\n  \"products\": [\n    {\n      \"title\": \"Full product title with specifications\",\n      \"price\": \"price as number (e.g., 299.99)\",\n      \"url\": \"full eBay listing URL\",\n      \"vendor\": \"ebay.com\"\n    }\n  ]\n}\n\nIMPORTANT:\n- Return maximum 8-10 products to ensure complete JSON output\n- Skip any placeholder listings like \"Shop on eBay\"\n- Focus on actual laptop products with specifications\n- Ensure the JSON is complete with all closing braces\n- No markdown formatting, just raw JSON",
+        "options": {
+          "systemMessage": "You are an expert eBay product data extractor. Your task is to find laptop listings on eBay and extract clean, structured product information.\n\nSPECIFIC REQUIREMENTS:\n- Extract ONLY genuine laptop products (ignore \"Shop on eBay\" placeholders)\n- Focus on complete product listings with prices and specifications\n- Handle eBay's varied listing formats\n- Return a COMPLETE, valid JSON response without truncation\n- If you encounter length limits, return FEWER products but ensure JSON completeness\n\nOUTPUT FORMAT: Strict JSON only, no markdown, no additional text."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -720,
+        -64
+      ],
+      "id": "5d5c6e7a-ce4e-426f-835b-f897734a5f4b",
+      "name": "Ebay Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "Amazon Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Amazon Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Ebay Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create spreadsheet": {
+      "main": [
+        [
+          {
+            "node": "Sheet header",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheet header": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Markdown1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown1": {
+      "main": [
+        [
+          {
+            "node": "Ebay Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Create spreadsheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "amazon scrapper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "ebay scrapper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ebay scrapper": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "amazon scrapper": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Amazon Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ebay Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2e35bf84-6786-404d-9750-3ee720263768",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "516229b88b99f499034b5e82fb0f8176a6a9e2c45edbe6e7ead938a38fc17383"
+  },
+  "id": "y1qjRgN9UKl6WI1A",
+  "tags": []
+}
