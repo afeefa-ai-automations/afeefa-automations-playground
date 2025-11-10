@@ -1,0 +1,1358 @@
+{
+  "name": "AI Marketing Assests Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg",
+          "mode": "list",
+          "cachedResultName": "AI ad Generator",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1232,
+        -1008
+      ],
+      "id": "65b5b16c-fe9f-43e4-8a0d-7d9e0722262e",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "CSEGXl79os0X0kRe",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg",
+          "mode": "list",
+          "cachedResultName": "AI ad Generator",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            " Product_URL": "={{ $('If').item.json[' Product_URL'] }}",
+            "Product_Title": "={{ $json.title }}",
+            "Product_Image_URL": "={{ $json.image_og }}",
+            "Status": "=",
+            "Created_Date": "={{ $now }}",
+            "Product_Price": "={{ $json.price }}"
+          },
+          "matchingColumns": [
+            " Product_URL"
+          ],
+          "schema": [
+            {
+              "id": " Product_URL",
+              "displayName": " Product_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product_Title",
+              "displayName": "Product_Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product_Image_URL",
+              "displayName": "Product_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product_Price",
+              "displayName": "Product_Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ad_Image_URL",
+              "displayName": "Ad_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Created_Date",
+              "displayName": "Created_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -32,
+        -1024
+      ],
+      "id": "9da0bb7a-04dd-49e9-8f4d-fff9746ab89e",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4Kwa0kxnEETWYjgN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Extract Product Info').item.json.image_og }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1296,
+        -592
+      ],
+      "id": "785b18ef-581a-4a54-9bfe-9195aead9450",
+      "name": "Download Product Image"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "sourceData": "binary",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "head > title"
+            },
+            {
+              "key": "meta description",
+              "cssSelector": "meta[name=\"description\"]",
+              "returnValue": "attribute",
+              "attribute": "content"
+            },
+            {
+              "key": "h1",
+              "cssSelector": "h1"
+            },
+            {
+              "key": "image_og",
+              "cssSelector": "meta[property=\"og:image\"]",
+              "returnValue": "attribute",
+              "attribute": "content"
+            },
+            {
+              "key": "image_main",
+              "cssSelector": "img#landingImage",
+              "returnValue": "attribute",
+              "attribute": "src"
+            },
+            {
+              "key": "price",
+              "cssSelector": "span.price-item.price-item--regular"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        -1024
+      ],
+      "id": "1dd03bde-dbc2-4348-a0a9-0d3cbe7704b6",
+      "name": "Extract Product Info"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.remove.bg/v1.0/removebg",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "MZKesy93onNtxmzu9z2muAS5"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image_file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1008,
+        -592
+      ],
+      "id": "ccfb849c-cbe1-48b8-bf98-96fd565c431f",
+      "name": "Image BG Removal"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -480
+      ],
+      "id": "149a79c0-bf2c-4b0b-9b13-3e723c4b16c3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NKHCHtB6c1Dn5Nxv",
+          "name": "Google Gemini(PaLM) Api account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"ad_image_brief\": {\n      \"type\": \"string\",\n      \"description\": \"Creative concept for a 16:9 ad image\"\n    },\n    \"instagram_post_brief\": {\n      \"type\": \"string\",\n      \"description\": \"Creative concept for a 1:1 Instagram post\"\n    },\n    \"instagram_story_brief\": {\n      \"type\": \"string\",\n      \"description\": \"Creative concept for a 9:16 Instagram story\"\n    }\n  },\n  \"required\": [\"ad_image_brief\", \"instagram_post_brief\", \"instagram_story_brief\"]\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -416,
+        -480
+      ],
+      "id": "c7876377-1870-4a30-96de-be4647af04af",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract the three creative briefs from previous node\nconst data = $json.output;\n\nreturn [\n  {\n    json: {\n      type: \"ad_image\",\n      aspect_ratio: \"16:9\",\n      prompt: data.ad_image_brief\n    }\n  },\n  {\n    json: {\n      type: \"instagram_post\",\n      aspect_ratio: \"1:1\",\n      prompt: data.instagram_post_brief\n    }\n  },\n  {\n    json: {\n      type: \"instagram_story\",\n      aspect_ratio: \"9:16\",\n      prompt: data.instagram_story_brief\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        -672
+      ],
+      "id": "aa580979-692d-4a8b-92db-7e4216912fba",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "=ad_image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "82294bc7-0ca7-49ff-b844-cc079418219a"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b4b5f83c-da3d-40b3-8df2-04e45d2537c9",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "=instagram_post",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e353c48e-a9ac-4672-ae9f-c6ebad4505e1",
+                    "leftValue": "={{ $json.type }}",
+                    "rightValue": "=instagram_story",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        64,
+        -688
+      ],
+      "id": "341041a5-3d3b-4378-bf4a-ab1894f4c762",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "type",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -672
+      ],
+      "id": "7d7a9231-721b-437d-beaa-5a9b63c2139f",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        -208
+      ],
+      "id": "397537eb-d835-47bc-9dbc-324195b0ca3b",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=AIzaSyDGsySg06o5t-SmOwmySagrMoSdmmQxvXY",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": {{ JSON.stringify($json.prompt) }}\n        }\n      ]\n    },\n    {\n      \"parts\": [\n        {\n          \"inlineData\": {\n            \"mimeType\": \"image/png\",\n            \"data\": {{ JSON.stringify($json.image_base64) }}\n          }\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        -576
+      ],
+      "id": "36dbe33d-ded6-40b9-af51-bc47f47f8b7f",
+      "name": "Instagram Story"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=AIzaSyDGsySg06o5t-SmOwmySagrMoSdmmQxvXY",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": {{ JSON.stringify($json.prompt) }}\n        }\n      ]\n    },\n    {\n      \"parts\": [\n        {\n          \"inlineData\": {\n            \"mimeType\": \"image/png\",\n            \"data\": {{ JSON.stringify($json.image_base64) }}\n          }\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        -752
+      ],
+      "id": "aa6072fb-88ca-4f16-9367-19efd0c82ff9",
+      "name": "Instagram Post"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=AIzaSyDGsySg06o5t-SmOwmySagrMoSdmmQxvXY",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": {{ JSON.stringify($json.prompt) }}\n        }\n      ]\n    },\n    {\n      \"parts\": [\n        {\n          \"inlineData\": {\n            \"mimeType\": \"image/png\",\n            \"data\": {{ JSON.stringify($json.image_base64) }}\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        -912
+      ],
+      "id": "48bf4434-9954-4108-b255-3257e1992cfb",
+      "name": "AD Image"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        336,
+        -576
+      ],
+      "id": "73b7bb93-105e-4122-a8fa-b6a2a48b2545",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        336,
+        -416
+      ],
+      "id": "2085f627-0559-4ef0-8764-793e44c6f206",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        336,
+        -224
+      ],
+      "id": "8b1779ed-721f-4267-9042-21cd0f2f1ca0",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      type: $json.type,\n      aspect_ratio: $json.aspect_ratio,\n      prompt: $json.prompt,\n      image_base64: $json.data ? $json.data.replace(/\\r?\\n|\\r/g, '') : ''\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        -784
+      ],
+      "id": "8e40632d-e9c9-4112-836d-74039faf613e",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      type: $json.type,\n      aspect_ratio: $json.aspect_ratio,\n      prompt: $json.prompt,\n      image_base64: $json.data ? $json.data.replace(/\\r?\\n|\\r/g, '') : ''\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        -624
+      ],
+      "id": "0a5759bc-d7f9-438a-983d-4bc3b7c42d92",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      type: $json.type,\n      aspect_ratio: $json.aspect_ratio,\n      prompt: $json.prompt,\n      image_base64: $json.data ? $json.data.replace(/\\r?\\n|\\r/g, '') : ''\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        -464
+      ],
+      "id": "eedf7f4c-f4dd-4739-9cb6-d7e9d5b01c81",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Brand Name: Jewels Kingdom\nProduct Name:{{ $('Update row in sheet').item.json.Product_Title }}\nPrice: {{ $('Update row in sheet').item.json.Product_Price }}\nDescription: {{ $('Extract Product Info').item.json['meta description'] }}\nBrand Style: Royal Aladin, Antique, Castles vibes.\n\nUse the provided image (from previous node) as the main product. \nGenerate creative visual briefs for an ad image, an Instagram post, and an Instagram story.\n\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are a creative AI art director specializing in digital advertising and social media design.\n\nYou will receive a product image and description. \nYour task is to design three creative visual concepts that use the given product image as the centerpiece:\n\n1. **Ad Image (16:9)** — for website banners or display ads.\n2. **Instagram Post (1:1)** — for feed posts.\n3. **Instagram Story (9:16)** — for story format.\n\nFor each visual, describe:\n- The type of background (color, texture, or scene)\n- The placement of the product\n- The overall mood or lighting\n- Any additional elements (props, text, shadows, gradients)\n- Optional short tagline (if it enhances the visual)\n\nKeep your descriptions visually rich but concise. \nOutput in structured JSON for automated image generation.\n\n\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -720,
+        -672
+      ],
+      "id": "1f06f845-1766-45ab-8cfc-346554d2fc80",
+      "name": "AI Prompt Agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7e73b78c-7873-4b31-b848-5dc87b0f7138",
+              "leftValue": "={{ $json.Status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -960,
+        -1008
+      ],
+      "id": "a0a068ca-195f-43b6-a0e2-472f373f6ccd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "content": "## Step 1: Get the data",
+        "height": 208,
+        "width": 1392
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1280,
+        -1072
+      ],
+      "typeVersion": 1,
+      "id": "1116fae1-540f-45bc-896d-3c3dc829740f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Step 3: Generate and Align Prompts\n",
+        "height": 416,
+        "width": 704,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -752,
+        -768
+      ],
+      "typeVersion": 1,
+      "id": "b768b98e-38c7-4ffa-b36a-1385b52a54e5",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Step 2: Download & Remove BG",
+        "height": 272,
+        "width": 480,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1344,
+        -688
+      ],
+      "typeVersion": 1,
+      "id": "ff411daf-4af9-404a-a290-3f36b29fa34f",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Step 5: Convert Image to Base64 String",
+        "height": 256,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -448,
+        -304
+      ],
+      "typeVersion": 1,
+      "id": "7553991f-d1f1-4aa5-be5b-ce55e056061d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Step 4: Divide Prompts",
+        "height": 336,
+        "width": 208,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -800
+      ],
+      "typeVersion": 1,
+      "id": "45946de9-ed3a-4351-9c55-09ff62f9bbcd",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Step 6: Merge Prompt & Base64 Strings",
+        "height": 624,
+        "width": 272,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        256,
+        -688
+      ],
+      "typeVersion": 1,
+      "id": "08e65866-21ad-4957-9d71-d6bda6e6e449",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Step 7: Clean and Align Merge Inputs",
+        "height": 624,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        -896
+      ],
+      "typeVersion": 1,
+      "id": "29525827-25b4-4b2f-8037-c28ecf3857ae",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Step 8: Image Generation",
+        "height": 640,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -1024
+      ],
+      "typeVersion": 1,
+      "id": "34a2fb06-9ce6-4bed-9c75-cea63e6f8976",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg",
+          "mode": "list",
+          "cachedResultName": "AI ad Generator",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Adj0eI8ZFzk3T7X2ZQ4crvOJ3JpB-ntYWMc1yWThevg/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Done",
+            "Ad_Image_URL": "={{ $json.id }}"
+          },
+          "matchingColumns": [
+            "Ad_Image_URL"
+          ],
+          "schema": [
+            {
+              "id": " Product_URL",
+              "displayName": " Product_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product_Title",
+              "displayName": "Product_Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product_Image_URL",
+              "displayName": "Product_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Product_Price",
+              "displayName": "Product_Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ad_Image_URL",
+              "displayName": "Ad_Image_URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Created_Date",
+              "displayName": "Created_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1280,
+        -48
+      ],
+      "id": "fc5cbac5-c509-41cc-b68d-5bb2f19f1cd1",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4Kwa0kxnEETWYjgN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "candidates[0].content.parts[0].inlineData.data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        -768
+      ],
+      "id": "b28795e0-587f-4f50-9ae4-f6c8f715477e",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "AI marketing assests generator",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1696,
+        -1008
+      ],
+      "id": "5aca138a-9b85-4649-a1eb-8c703e8bcf4a",
+      "name": "Create folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dcTHQdul3PcPpmeT",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "New",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1_KCV-EIliMLXxOMUqfyaTnNB35Nf-pEA",
+          "mode": "list",
+          "cachedResultName": "AI marketing assests generator",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1_KCV-EIliMLXxOMUqfyaTnNB35Nf-pEA"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1808,
+        -480
+      ],
+      "id": "7388e9b4-d3bd-4518-acc2-2050d5a3db6e",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dcTHQdul3PcPpmeT",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Step 9: Move Base64 String to file",
+        "height": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1280,
+        -928
+      ],
+      "typeVersion": 1,
+      "id": "fe86975e-49c7-4ba2-b045-bbcf03b96a9e",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Step 10: Creater Folder",
+        "height": 288,
+        "width": 304,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1584,
+        -1104
+      ],
+      "typeVersion": 1,
+      "id": "e0b375c4-d265-43aa-988e-9a2ce2847894",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Step 11: Upload files to folder",
+        "height": 320,
+        "width": 256,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1744,
+        -592
+      ],
+      "typeVersion": 1,
+      "id": "79484dfc-7d9b-4a2c-b48c-73e1b41fc583",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Step 12: Update Googlesheets",
+        "height": 288,
+        "width": 320,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1232,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "394bdb99-7792-4e70-a31a-42461e61a1e3",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json[' Product_URL'] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -656,
+        -1024
+      ],
+      "id": "645472ba-3c5d-47af-8e76-6fcc2318987a",
+      "name": "Receive Product link"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Download Product Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Product Image": {
+      "main": [
+        [
+          {
+            "node": "Image BG Removal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Product Info": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image BG Removal": {
+      "main": [
+        [
+          {
+            "node": "AI Prompt Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Prompt Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Prompt Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "AD Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Instagram Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Instagram Story",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Prompt Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Receive Product link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AD Image": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Instagram Post": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Story": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder": {
+      "main": [
+        []
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Create folder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Receive Product link": {
+      "main": [
+        [
+          {
+            "node": "Extract Product Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a8f10cc0-7bab-4314-b326-afa293be7527",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "516229b88b99f499034b5e82fb0f8176a6a9e2c45edbe6e7ead938a38fc17383"
+  },
+  "id": "yxcSjEQ1O3ws2b3I",
+  "tags": []
+}
